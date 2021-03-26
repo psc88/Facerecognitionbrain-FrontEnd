@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Navigation from './Components/Navigation/Navigation';
+import Signin from './Components/SignIn/Signin';
 import FaceRecognition from './Components/FaceRecognition/FaceRecognition';
 import Clarifai from 'clarifai';
 import Logo from './Components/Logo/Logo';
@@ -32,7 +33,9 @@ class App extends Component {
       input: '',
       imageUrl: '',
       //agregado de caja que contendra los valores que recibimnos
-      box: {}
+      box: {},
+      //creamos un estado de ruta y a ruta realiza un seguimiento de donde esta la pagina
+      route: 'signin'
     }
   }
 
@@ -80,13 +83,18 @@ class App extends Component {
         params={particleOptions} 
       />
       <Navigation />
-      <Logo />
-      <Rank />
-      <ImageLinkForm 
-        onInputChange={this.onInputChange} 
-        onButtonSubmit={this.onButtonSubmit}
-      />
-      <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl}/>
+      { this.state.route === 'signin'
+         ? <Signin />
+         : <div> 
+              <Logo />
+              <Rank />
+              <ImageLinkForm 
+                onInputChange={this.onInputChange} 
+                onButtonSubmit={this.onButtonSubmit}
+              />
+              <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl}/>
+            </div>
+      }
     </div>
   );
  }
