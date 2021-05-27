@@ -98,7 +98,24 @@ class App extends Component {
       Clarifai.FACE_DETECT_MODEL, 
       this.state.input)
       //calculatefacelocation toma una respuesta, devuelve un objeto y este objeto devuelve un displayfacebox
-      .then(response => this.displayFacebox(this.calculateFaceLocation(response)))
+      .then(response => {
+        if(response) {
+          fetch('http://localhost:3001/image', {
+            method: 'put',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+            id: this.state.user.id
+            })
+          })
+            .then(response => response.json())
+            .then(count => {
+              this.setState(Object.assign(this.state.user, {
+                entries: count
+              }))
+            })
+        }
+        this.displayFacebox(this.calculateFaceLocation(response))
+      })
       //usamos promesa para el error
       .catch(err => console.log(err));
   }
