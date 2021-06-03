@@ -89,7 +89,7 @@ class App extends Component {
   onButtonSubmit = () => {
     // de esta manera podemos pasar la imagenUrl
     this.setState({imageUrl: this.state.input});
-      fetch('http://shrouded-dawn-95840.herokuapp.com/imageurl', {
+      fetch('https://shrouded-dawn-95840.herokuapp.com/imageurl', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
